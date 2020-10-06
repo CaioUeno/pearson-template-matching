@@ -1,8 +1,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import cv2
 
 def pearson_correlation(img, obj):
-
     num_rows, num_cols = img.shape
     num_rows_obj, num_cols_obj = obj.shape   
     half_num_rows_obj = num_rows_obj//2        
@@ -29,3 +29,20 @@ def pearson_correlation(img, obj):
             img_result[row, col] = np.sum(result_region)
             
     return img_result
+
+def draw_rectangle(img_g, center, size):
+    '''
+    Draws a rectangle on an image.
+    img: base image to draw the rectangle on (2d array)
+    center: center of the rectangle on the base image (tuple)
+    size: size of the rectangle (tuple)
+    '''
+    
+    num_rows = size[0]//2
+    num_cols = size[1]//2
+    img_rectangle = img_g.copy()
+    pt1 = (center[1]-num_cols, center[0]-num_rows)
+    pt2 = (center[1]+num_cols, center[0]+num_rows)
+
+    cv2.rectangle(img_rectangle, pt1=pt1, pt2=pt2, color=255, thickness=3)
+    return img_rectangle
